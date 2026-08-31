@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>M1 1000 — Práctica PAES Competencia Matemática 1</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<a class="salto-contenido" href="#main">Saltar al contenido</a>
+
+<header class="barra-superior">
+  <p class="marca">M1<span class="marca-punto" aria-hidden="true"></span><span class="marca-mil">1000</span></p>
+  <div class="barra-superior-chips">
+    <button type="button" id="chip-perfil" class="chip-perfil" title="Cambiar de perfil">
+      <span aria-hidden="true">👤</span>
+      <span id="chip-perfil-nombre">Invitado</span>
+    </button>
+    <div id="chip-racha" class="chip-racha" hidden>
+      <span aria-hidden="true">🔥</span>
+      <span id="chip-racha-numero">0</span>
+      <span class="chip-racha-texto">días</span>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+  <section id="vista-perfil" class="vista">
+    <h1 class="titulo-vista">¿Quién eres?</h1>
+
+    <div class="tarjeta tarjeta-perfil">
+      <p class="eyebrow">Perfiles en este navegador</p>
+      <div id="lista-perfiles" class="lista-perfiles"></div>
+
+      <p class="eyebrow">Crear un perfil nuevo</p>
+      <div class="form-perfil">
+        <input id="input-nuevo-perfil" type="text" placeholder="Tu nombre" maxlength="30">
+        <button id="btn-crear-perfil" type="button" class="boton boton-principal">Crear</button>
+      </div>
+
+      <button id="btn-cancelar-perfil" type="button" class="boton-salir" hidden>Cancelar</button>
+    </div>
+  </section>
+
+  <section id="vista-inicio" class="vista vista-activa">
+    <h1 class="titulo-vista">Hoy</h1>
+
+    <div class="tarjeta tarjeta-meta">
+      <p class="eyebrow">Meta diaria</p>
+      <p id="titulo-meta" class="titulo-meta">5 preguntas</p>
+      <p id="subtitulo-meta" class="subtitulo-meta">Dos minutos cada una. Nada más.</p>
+
+      <div id="hoja-respuestas" class="hoja-respuestas" aria-hidden="true"></div>
+
+      <button id="btn-comenzar" type="button" class="boton boton-principal">Comenzar</button>
+      <p id="nota-meta" class="nota-meta"></p>
+    </div>
+
+    <div id="tarjeta-repaso" class="tarjeta" hidden>
+      <p class="eyebrow">Repaso pendiente</p>
+      <p id="texto-repaso" class="texto-repaso"></p>
+    </div>
+
+    <div class="fila-resumen">
+      <div class="tarjeta tarjeta-mini">
+        <p class="eyebrow">Puntaje</p>
+        <p id="mini-puntaje" class="dato-grande">—</p>
+      </div>
+      <div class="tarjeta tarjeta-mini">
+        <p class="eyebrow">Precisión</p>
+        <p id="mini-precision" class="dato-grande">—</p>
+      </div>
+      <div class="tarjeta tarjeta-mini">
+        <p class="eyebrow">Banco</p>
+        <p id="mini-banco" class="dato-grande">0/0</p>
+      </div>
+    </div>
+
+    <div class="tarjeta">
+      <p class="eyebrow">Practicar por tema</p>
+      <p class="dato-pie nota-temas">No cuenta para la meta diaria, pero sí queda guardado en tu historial.</p>
+      <div class="temas-grid">
+        <button type="button" class="boton-tema" data-area="Números">Números</button>
+        <button type="button" class="boton-tema" data-area="Álgebra y funciones">Álgebra y funciones</button>
+        <button type="button" class="boton-tema" data-area="Geometría">Geometría</button>
+        <button type="button" class="boton-tema" data-area="Probabilidad y estadística">Probabilidad y estadística</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="vista-practica" class="vista">
+    <div class="cabecera-practica">
+      <p id="contador-sesion" class="contador-sesion">Pregunta 1 de 5</p>
+      <p id="reloj" class="reloj">02:00</p>
+    </div>
+    <div class="barra-tiempo">
+      <div id="barra-tiempo-relleno" class="barra-tiempo-relleno"></div>
+    </div>
+
+    <div class="etiquetas-pregunta">
+      <span id="etiqueta-area" class="etiqueta etiqueta-suave">M1</span>
+      <span id="etiqueta-dificultad" class="etiqueta">media</span>
+      <span id="etiqueta-repaso" class="etiqueta etiqueta-repaso" hidden>Repaso</span>
+    </div>
+
+    <p id="enunciado" class="enunciado"></p>
+
+    <figure id="figura-pregunta" class="figura-pregunta" hidden>
+      <img id="imagen-pregunta" alt="">
+    </figure>
+
+    <div id="alternativas" class="alternativas" role="radiogroup" aria-label="Alternativas"></div>
+
+    <div class="pie-practica">
+      <button id="btn-responder" type="button" class="boton boton-principal" disabled>Responder</button>
+      <button id="btn-salir" type="button" class="boton-salir">Salir de la práctica</button>
+      <p class="pista-teclado">Usa A, B, C, D para elegir y Enter para responder.</p>
+    </div>
+  </section>
+
+  <section id="vista-resultado" class="vista">
+    <div id="tarjeta-veredicto" class="tarjeta tarjeta-veredicto">
+      <p id="veredicto" class="veredicto">Correcto</p>
+
+      <div class="comparacion">
+        <div class="comparacion-item">
+          <p class="eyebrow">Tu respuesta</p>
+          <p id="burbuja-tuya" class="burbuja-resultado">—</p>
+        </div>
+        <div class="comparacion-item">
+          <p class="eyebrow">Correcta</p>
+          <p id="burbuja-correcta" class="burbuja-resultado burbuja-correcta">—</p>
+        </div>
+      </div>
+
+      <p id="tiempo-usado" class="tiempo-usado">00:00</p>
+    </div>
+
+    <div class="tarjeta">
+      <p class="eyebrow">Explicación</p>
+      <p id="explicacion" class="explicacion"></p>
+      <p id="proximo-repaso" class="proximo-repaso"></p>
+    </div>
+
+    <button id="btn-continuar" type="button" class="boton boton-principal">Siguiente pregunta</button>
+  </section>
+
+  <section id="vista-resumen" class="vista">
+    <div class="tarjeta tarjeta-celebracion">
+      <p class="eyebrow">Sesión terminada</p>
+      <p id="titulo-celebracion" class="titulo-celebracion">0 de 0</p>
+      <div id="hoja-resumen" class="hoja-respuestas hoja-grande" aria-hidden="true"></div>
+      <p id="frase-cierre" class="frase-cierre"></p>
+    </div>
+
+    <div class="fila-resumen">
+      <div class="tarjeta tarjeta-mini">
+        <p class="eyebrow">Aciertos</p>
+        <p class="dato-grande"><span id="resumen-aciertos">0</span> <span class="dato-pie">de 0</span></p>
+      </div>
+      <div class="tarjeta tarjeta-mini">
+        <p class="eyebrow">Tiempo prom.</p>
+        <p id="resumen-tiempo" class="dato-grande">00:00</p>
+      </div>
+      <div class="tarjeta tarjeta-mini">
+        <p class="eyebrow">Puntaje</p>
+        <p id="resumen-puntaje" class="dato-grande">—</p>
+        <p id="resumen-delta" class="dato-pie"></p>
+      </div>
+    </div>
+
+    <button id="btn-seguir" type="button" class="boton boton-principal">Practicar más</button>
+    <button id="btn-volver-inicio" type="button" class="boton boton-secundario">Volver al inicio</button>
+  </section>
+
+  <section id="vista-estadisticas" class="vista">
+    <h1 class="titulo-vista">Estadísticas</h1>
+
+    <div class="tarjeta">
+      <p class="eyebrow">Por área</p>
+      <div id="lista-areas" class="lista-areas"></div>
+    </div>
+
+    <div class="tarjeta">
+      <p class="eyebrow">General</p>
+      <dl id="lista-datos" class="lista-datos"></dl>
+    </div>
+
+    <div class="tarjeta">
+      <p class="eyebrow">Historial reciente</p>
+      <div id="tira-historial" class="tira-historial"></div>
+      <p id="nota-historial" class="dato-pie"></p>
+    </div>
+  </section>
+
+  <section id="vista-progreso" class="vista">
+    <h1 class="titulo-vista">Progreso</h1>
+
+    <div class="tarjeta tarjeta-puntaje">
+      <p class="eyebrow">Puntaje</p>
+      <p id="puntaje-grande" class="puntaje-grande">—</p>
+      <div class="barra-puntaje">
+        <div id="barra-puntaje-relleno" class="barra-puntaje-relleno"></div>
+      </div>
+      <p id="nota-puntaje" class="dato-pie"></p>
+    </div>
+
+    <div class="tarjeta">
+      <p class="eyebrow">Racha</p>
+      <p id="racha-actual" class="dato-grande">0 días</p>
+      <p id="mejor-racha" class="dato-pie"></p>
+      <div id="semana" class="semana"></div>
+    </div>
+
+    <div class="tarjeta">
+      <p class="eyebrow">Banco de preguntas</p>
+      <div id="estados-banco" class="estados-banco"></div>
+    </div>
+
+    <div class="tarjeta">
+      <p class="eyebrow">Logros</p>
+      <div id="lista-logros" class="lista-logros"></div>
+    </div>
+
+    <div class="tarjeta tarjeta-peligro">
+      <button id="btn-reiniciar" type="button" class="boton boton-peligro">Borrar todo mi progreso</button>
+    </div>
+  </section>
+
+</main>
+
+<nav id="barra-inferior" class="barra-inferior" hidden>
+  <button type="button" class="pestana pestana-activa" data-vista="vista-inicio">
+    <span class="pestana-icono" aria-hidden="true">🏠</span>Inicio
+  </button>
+  <button type="button" class="pestana" data-vista="vista-estadisticas">
+    <span class="pestana-icono" aria-hidden="true">📊</span>Estadísticas
+  </button>
+  <button type="button" class="pestana" data-vista="vista-progreso">
+    <span class="pestana-icono" aria-hidden="true">📈</span>Progreso
+  </button>
+</nav>
+
+<div id="aviso" class="aviso" role="status" hidden></div>
+
+<script src="js/perfiles.js"></script>
+<script src="js/progress.js"></script>
+<script src="js/timer.js"></script>
+<script src="data/invierno2026.js"></script>
+<script src="data/regular2024.js"></script>
+<script src="data/invierno2027.js"></script>
+<script src="data/regular2025.js"></script>
+<script src="data/regular2026.js"></script>
+<script src="data/questions.js"></script>
+<script src="js/questions.js"></script>
+<script src="js/app.js"></script>
+
+</body>
+</html>
