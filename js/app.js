@@ -43,12 +43,23 @@
     window.scrollTo({ top: 0, behavior: "instant" });
   }
 
-  function aviso(texto) {
+  function aviso(texto, icono) {
     const caja = $("aviso");
-    caja.textContent = texto;
+    caja.innerHTML = icono ? Iconos.svg(icono, "icono-aviso") : "";
+    caja.appendChild(document.createTextNode(texto));
     caja.hidden = false;
     clearTimeout(caja._t);
     caja._t = setTimeout(function () { caja.hidden = true; }, 3200);
+  }
+
+  /* Cambia de vista y refresca los datos de la vista de destino,
+     usado tanto por la barra inferior como por accesos directos
+     como la tarjeta de progreso del inicio. */
+  function irA(destino) {
+    if (destino === "vista-inicio") renderInicio();
+    if (destino === "vista-estadisticas") renderEstadisticas();
+    if (destino === "vista-progreso") renderProgreso();
+    mostrarVista(destino);
   }
 
   /* ═══════════════════ inicio ═══════════════════ */
@@ -78,6 +89,28 @@
     // Racha en la barra superior
     $("chip-racha").hidden = r.actual === 0;
     $("chip-racha-numero").textContent = r.actual;
+
+    // Hero de competencia y progreso: lo primero que se ve al entrar
+    $("hero-puntaje").textContent = p === null ? "—" : p;
+    $("hero-barra-relleno").style.width = p === null ? "0%" : ((p - 100) / 900) * 100 + "%";
+    $("hero-puntaje-nota").textContent = p === null
+      ? `Faltan ${Progreso.faltanParaPuntaje()} preguntas para ver tu puntaje`
+      : "de 1000, según tus últimas respuestas";
+
+    $("hero-racha").textContent = r.actual;
+    $("hero-icono-racha").innerHTML = Iconos.svg("flame");
+    $("hero-bloque-racha").classList.toggle("hay-racha", r.actual > 0);
+
+    const todosLogros = Progreso.logros();
+    const cajaLogros = $("hero-logros");
+    cajaLogros.innerHTML = "";
+    todosLogros.forEach(function (l) {
+      const insignia = document.createElement("span");
+      insignia.className = "insignia" + (l.obtenido ? " insignia-obtenida" : "");
+      insignia.title = l.nombre + (l.obtenido ? "" : " (pendiente)");
+      insignia.innerHTML = Iconos.svg(l.icono);
+      cajaLogros.appendChild(insignia);
+    });
 
     // Hoja de respuestas del día
     const marcas = [];
@@ -114,9 +147,9 @@
       : "";
 
     // Tarjetas resumen
-    $("mini-puntaje").textContent = p === null ? "—" : p;
     $("mini-precision").textContent = est.precision === null ? "—" : est.precision + "%";
     $("mini-banco").textContent = `${resumenBanco.correctas + resumenBanco.conErrores}/${resumenBanco.total}`;
+    $("mini-logros").textContent = `${todosLogros.filter(function (l) { return l.obtenido; }).length}/${todosLogros.length}`;
 
     // Aviso de repasos pendientes
     if (resumenBanco.paraHoy > 0 && !cumplida) {
@@ -268,7 +301,7 @@
 
     if (nuevosLogros.length) {
       setTimeout(function () {
-        aviso(`${nuevosLogros[0].icono} Logro: ${nuevosLogros[0].nombre}`);
+        aviso(`Logro: ${nuevosLogros[0].nombre}`, nuevosLogros[0].icono);
       }, 700);
     }
   }
@@ -481,7 +514,7 @@
       const item = document.createElement("div");
       item.className = "logro" + (l.obtenido ? " logro-obtenido" : "");
       item.innerHTML =
-        `<span class="logro-icono">${l.icono}</span>
+        `<span class="logro-icono">${Iconos.svg(l.icono)}</span>
          <div><p class="logro-nombre"></p><p class="logro-detalle"></p></div>`;
       item.querySelector(".logro-nombre").textContent = l.nombre;
       item.querySelector(".logro-detalle").textContent = l.detalle;
@@ -564,10 +597,9 @@
     $("btn-continuar").addEventListener("click", continuar);
     $("btn-salir").addEventListener("click", salirDeLaPractica);
 
-    $("btn-volver-inicio").addEventListener("click", function () {
-      renderInicio();
-      mostrarVista("vista-inicio");
-    });
+    $("btn-volver-inicio").addEventListener("click", function () { irA("vista-inicio"); });
+
+    $("hero-progreso").addEventListener("click", function () { irA("vista-progreso"); });
 
     $("btn-seguir").addEventListener("click", iniciarSesion);
 
@@ -583,13 +615,7 @@
     });
 
     document.querySelectorAll(".pestana").forEach(function (p) {
-      p.addEventListener("click", function () {
-        const destino = p.dataset.vista;
-        if (destino === "vista-inicio") renderInicio();
-        if (destino === "vista-estadisticas") renderEstadisticas();
-        if (destino === "vista-progreso") renderProgreso();
-        mostrarVista(destino);
-      });
+      p.addEventListener("click", function () { irA(p.dataset.vista); });
     });
 
     document.querySelectorAll(".boton-tema").forEach(function (b) {
@@ -610,10 +636,7 @@
       }
     });
 
-    $("btn-cancelar-perfil").addEventListener("click", function () {
-      renderInicio();
-      mostrarVista("vista-inicio");
-    });
+    $("btn-cancelar-perfil").addEventListener("click", function () { irA("vista-inicio"); });
 
     document.addEventListener("keydown", atajos);
 

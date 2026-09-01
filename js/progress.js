@@ -33,12 +33,12 @@ const Progreso = (function () {
   const PESO_DIFICULTAD = { baja: 0.85, media: 1.0, alta: 1.15 };
 
   const LOGROS = [
-    { id: "primera",   icono: "🏅", nombre: "Primera pregunta",  detalle: "Responder tu primera pregunta." },
-    { id: "racha7",    icono: "🔥", nombre: "Racha de 7",         detalle: "Cumplir la meta siete días seguidos." },
-    { id: "cien",      icono: "🎯", nombre: "100 preguntas",      detalle: "Resolver 100 preguntas." },
-    { id: "velocista", icono: "⚡", nombre: "Velocista",          detalle: "Acertar 10 preguntas en menos de 40 segundos." },
-    { id: "precision", icono: "💯", nombre: "Precisión",          detalle: "85% de aciertos en tus últimas 20 respuestas." },
-    { id: "constante", icono: "📚", nombre: "Constante",          detalle: "Cumplir la meta diaria 10 veces." }
+    { id: "primera",   icono: "award",      nombre: "Primera pregunta",  detalle: "Responder tu primera pregunta." },
+    { id: "racha7",    icono: "flame",      nombre: "Racha de 7",         detalle: "Cumplir la meta siete días seguidos." },
+    { id: "cien",      icono: "target",     nombre: "100 preguntas",      detalle: "Resolver 100 preguntas." },
+    { id: "velocista", icono: "zap",        nombre: "Velocista",          detalle: "Acertar 10 preguntas en menos de 40 segundos." },
+    { id: "precision", icono: "percent",    nombre: "Precisión",          detalle: "85% de aciertos en tus últimas 20 respuestas." },
+    { id: "constante", icono: "book",       nombre: "Constante",          detalle: "Cumplir la meta diaria 10 veces." }
   ];
 
   let estado = null;

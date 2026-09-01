@@ -87,6 +87,8 @@ cargar.
 | `js/progress.js` | LocalStorage (por perfil), repetición espaciada, puntaje, racha, logros. |
 | `js/questions.js` | Decide qué preguntas tocan hoy, o filtradas por área. |
 | `js/timer.js` | El temporizador de dos minutos. |
+| `js/iconos.js` | Set propio de iconos en línea (estilo Lucide), sin depender de internet. |
+| `js/fondo.js` | Dibuja la animación de símbolos matemáticos de fondo en `<canvas>`. |
 | `js/app.js` | Las pantallas y la interacción. |
 
 ### Perfiles
@@ -149,10 +151,12 @@ un día completo sin cumplirla, vuelve a cero.
 
 ## Qué falta
 
-Por orden de utilidad:
+Las 5 pruebas (Invierno 2026, Regular 2024, Invierno 2027, Regular 2025 y
+Regular 2026) ya están cargadas completas. Por orden de utilidad, lo que
+sigue pendiente:
 
-1. Cargar las 65 preguntas de Invierno 2026 y sus figuras.
-2. Cargar las otras cuatro pruebas.
-3. Cuentas de usuario y base de datos, para conservar el progreso entre
+1. Revisar contra los PDF originales las respuestas marcadas `revisar: true`
+   (ver `REVISAR.md`), ya que ninguna prueba trae clave oficial.
+2. Cuentas de usuario y base de datos, para conservar el progreso entre
    dispositivos.
-4. Ajustar la fórmula del puntaje con datos reales.
+3. Ajustar la fórmula del puntaje con datos reales.

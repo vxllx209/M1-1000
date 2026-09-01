@@ -36,13 +36,18 @@ body{
   font-family: var(--texto);
   color: var(--tinta);
   background-color: var(--papel);
-  background-image:
-    linear-gradient(var(--linea) 1px, transparent 1px),
-    linear-gradient(90deg, var(--linea) 1px, transparent 1px);
-  background-size: 26px 26px;
-  background-position: -1px -1px;
   line-height: 1.5;
   padding-bottom: 92px;
+}
+
+/* fondo animado con símbolos matemáticos, ver js/fondo.js.
+   Vive detrás de todo el contenido; si JS no corre, el
+   background-color del body de arriba sigue sirviendo de respaldo. */
+#fondo-matematico{
+  position: fixed; inset: 0;
+  width: 100%; height: 100%;
+  z-index: -2;
+  pointer-events: none;
 }
 
 .salto-contenido{
@@ -55,13 +60,32 @@ body{
 
 /* ─────────────────────── barra superior ─────────────────────── */
 
-.barra-superior{
+.barra-fija{
   position: sticky; top: 0; z-index: 20;
+  background: var(--papel);
+}
+
+.barra-superior{
   display: flex; align-items: center; justify-content: space-between;
   gap: 12px;
   padding: 14px 20px;
-  background: var(--papel);
   border-bottom: 1.5px solid var(--tinta);
+}
+
+/* la frase que acompaña siempre la app, fija bajo la barra superior */
+.cinta-frase{
+  padding: 7px 20px;
+  text-align: center;
+  border-bottom: 1px solid var(--linea);
+  background: var(--lapiz-suave);
+}
+.cinta-frase p{
+  margin: 0;
+  font-family: var(--texto);
+  font-style: italic;
+  font-size: 12.5px;
+  letter-spacing: 0.01em;
+  color: var(--lapiz);
 }
 
 .marca{
@@ -87,6 +111,16 @@ body{
   box-shadow: var(--sombra-chica);
 }
 .chip-racha-texto{ color: var(--tinta-media); font-weight: 400; }
+
+/* ─────────────────────── iconos ─────────────────────── */
+
+.icono{
+  width: 16px; height: 16px;
+  flex: 0 0 auto;
+  vertical-align: middle;
+}
+.chip-perfil .icono{ width: 14px; height: 14px; color: var(--tinta); }
+.chip-racha .icono-flame{ width: 14px; height: 14px; color: var(--racha); }
 
 /* ─────────────────────── vistas ─────────────────────── */
 
@@ -147,6 +181,86 @@ main{
 .fila-resumen .tarjeta{ margin-bottom: 0; padding: 14px 12px; }
 .tarjeta-mini .dato-grande{ font-size: 24px; }
 .tarjeta-mini .eyebrow{ font-size: 10px; letter-spacing: .08em; }
+
+/* ─────────────────────── hero de progreso y competencia ─────────────────────── */
+/* Primero lo que ve el usuario al entrar: cuánto lleva y qué le
+   falta. Es un <button> para poder tocarlo e ir directo a la vista
+   Progreso, pero se ve y se comporta como una tarjeta más. */
+
+.tarjeta-hero-progreso{
+  display: block; width: 100%; text-align: left;
+  background: var(--tinta); border-color: var(--tinta);
+  color: var(--blanco);
+  cursor: pointer;
+  font-family: inherit;
+  transition: transform .12s ease, box-shadow .12s ease;
+}
+.tarjeta-hero-progreso:hover{ transform: translateY(-1px); }
+.tarjeta-hero-progreso:active{ transform: translate(2px, 2px); box-shadow: none; }
+.tarjeta-hero-progreso .eyebrow{ color: #9AA6BF; }
+.tarjeta-hero-progreso .dato-pie{ color: #9AA6BF; }
+
+.hero-fila{
+  display: flex; align-items: flex-end; justify-content: space-between;
+  gap: 18px;
+}
+.hero-bloque-puntaje{ flex: 1; min-width: 0; }
+.hero-puntaje{
+  font-family: var(--display);
+  font-size: 46px; font-weight: 800; letter-spacing: -0.04em; line-height: 1;
+  margin: 0 0 10px;
+  font-variant-numeric: tabular-nums;
+}
+.hero-barra{
+  height: 9px; background: #24324D; border-radius: 999px;
+  overflow: hidden; margin-bottom: 6px;
+}
+.hero-barra-relleno{
+  height: 100%; width: 0%;
+  background: var(--blanco);
+  border-radius: 999px;
+  transition: width .6s cubic-bezier(.22,1,.36,1);
+}
+
+.hero-bloque-racha{
+  flex: 0 0 auto; text-align: center;
+  padding-left: 16px; border-left: 1px solid #2C3B58;
+}
+.hero-icono-racha{ display: inline-flex; }
+.hero-icono-racha .icono{
+  width: 26px; height: 26px; color: var(--racha);
+}
+.hero-racha-numero{
+  font-family: var(--display);
+  font-size: 26px; font-weight: 800; letter-spacing: -0.03em;
+  margin: 4px 0 0;
+}
+.hero-bloque-racha.hay-racha .hero-icono-racha{ animation: laten 2.4s ease-in-out infinite; }
+@keyframes laten{
+  0%, 100%{ transform: scale(1); }
+  50%{ transform: scale(1.12); }
+}
+
+.hero-logros-fila{
+  display: flex; gap: 8px; margin-top: 18px;
+  overflow-x: auto;
+}
+.insignia{
+  flex: 0 0 auto;
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  display: grid; place-items: center;
+  border: 1.5px solid #3A4A6B;
+  color: #6B7A99;
+  opacity: .55;
+}
+.insignia .icono{ width: 16px; height: 16px; }
+.insignia-obtenida{
+  opacity: 1;
+  border-color: var(--racha);
+  background: rgba(224,135,0,.16);
+  color: var(--racha);
+}
 
 /* ─────────────────────── inicio ─────────────────────── */
 
@@ -502,7 +616,15 @@ main{
 .logro-obtenido{
   opacity: 1; border-color: var(--tinta); box-shadow: var(--sombra-chica);
 }
-.logro-icono{ font-size: 22px; line-height: 1; }
+.logro-icono{
+  flex: 0 0 auto;
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  display: grid; place-items: center;
+  background: var(--papel); color: var(--tinta-media);
+}
+.logro-icono .icono{ width: 18px; height: 18px; }
+.logro-obtenido .logro-icono{ background: var(--lapiz-suave); color: var(--lapiz); }
 .logro-nombre{ font-size: 14.5px; font-weight: 600; margin: 0; }
 .logro-detalle{ font-size: 12.5px; color: var(--tinta-media); margin: 0; }
 
@@ -526,8 +648,18 @@ main{
   letter-spacing: .04em; text-transform: uppercase;
   color: var(--tinta-media);
 }
-.pestana-icono{ font-size: 16px; line-height: 1; }
+.pestana-icono-envoltura{
+  display: grid; place-items: center;
+  width: 34px; height: 26px;
+  border-radius: 999px;
+  transition: background-color .18s ease, transform .18s ease;
+}
+.pestana-icono{ width: 19px; height: 19px; }
 .pestana-activa{ color: var(--lapiz); }
+.pestana-activa .pestana-icono-envoltura{
+  background: var(--lapiz-suave);
+  transform: translateY(-1px) scale(1.04);
+}
 .barra-inferior[hidden]{ display: none; }
 .chip-racha[hidden]{ display: none; }
 
@@ -536,6 +668,7 @@ main{
 .aviso{
   position: fixed; left: 50%; bottom: 96px; transform: translateX(-50%);
   z-index: 40;
+  display: flex; align-items: center; gap: 8px;
   background: var(--tinta); color: var(--blanco);
   border-radius: 999px;
   padding: 11px 20px;
@@ -544,6 +677,8 @@ main{
   animation: subir .3s ease both;
   max-width: 90vw;
 }
+.icono-aviso{ width: 17px; height: 17px; color: var(--racha); }
+.aviso[hidden]{ display: none; }
 @keyframes subir{
   from{ opacity: 0; transform: translate(-50%, 10px); }
   to{ opacity: 1; transform: translate(-50%, 0); }
@@ -622,4 +757,24 @@ main{
     border: 1.5px solid var(--tinta); border-radius: var(--radio);
     box-shadow: var(--sombra-chica);
   }
+}
+
+/* pantallas de escritorio: se aprovecha el ancho disponible sin
+   perder la identidad de columna centrada — solo se ensancha. */
+@media (min-width: 900px){
+  main, .barra-inferior{ max-width: 760px; }
+
+  .barra-superior, .cinta-frase{
+    padding-left: max(20px, calc((100% - 760px) / 2));
+    padding-right: max(20px, calc((100% - 760px) / 2));
+  }
+
+  main{ padding-top: 32px; }
+  .titulo-vista{ font-size: 34px; }
+
+  .fila-resumen{ gap: 14px; }
+
+  .temas-grid{ grid-template-columns: repeat(4, 1fr); }
+
+  .hero-puntaje{ font-size: 54px; }
 }

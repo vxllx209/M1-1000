@@ -37,11 +37,28 @@ para desconfiar del resultado.
   contar cada punto uno por uno. Vale la pena verificar contando los
   puntos exactos si el estudiante falla esta.
 
+## PAES Regular 2026, selección de 45 preguntas (Forma 113) — `data/regular2026.js`
+
+Igual que el resto: sin clave oficial, las 45 preguntas están marcadas `revisar: true`.
+El folleto es una "selección de 45 preguntas" del examen completo, así que el número
+de pregunta que trae el PDF salta (por ejemplo, va del 5 al 11); el campo `numero` de
+cada pregunta no es el número original del PDF, sino su posición dentro de esta
+selección (1 a 45), para que coincida con el orden en que aparecen en el folleto.
+
+- **p32** (pregunta de la hoja doblada y recortada, `¿Cuál de las siguientes figuras
+  se obtendrá al desdoblarse...?`): las cuatro alternativas son figuras, no texto.
+  Transcribí una descripción de cada una; conviene comparar visualmente contra la
+  página 26 del PDF si el estudiante falla esta.
+- **p33** (transformaciones isométricas sobre una flecha): resuelto analíticamente
+  siguiendo el ángulo de la flecha paso a paso; conviene verificar contra la figura.
+- **p34** (vectores u y v): la dirección de la flecha de u (hacia dónde apunta la
+  punta) es la parte más fácil de leer mal en el PDF; ya se verificó con un recorte
+  ampliado, pero vale la pena confirmar contra la página 28 si algo no cuadra.
+
 ## Pendiente
 
-- PAES Regular 2024 (Forma 113) — `data/regular2024.js` — **no iniciado**.
-- PAES Regular 2025, selección de 45 preguntas (Forma 113) —
-  `data/regular2025.js` — **no iniciado**.
-- PAES Regular 2026, selección de 45 preguntas (Forma 113) —
-  `data/regular2026.js` — **no iniciado**.
-- PAES Invierno 2027 (Forma 111) — `data/invierno2027.js` — **no iniciado**.
+Con Regular 2026 completo, las 5 pruebas del banco (Invierno 2026, Regular 2024,
+Invierno 2027, Regular 2025 y Regular 2026) ya tienen todas sus preguntas cargadas.
+No queda ninguna prueba sin iniciar. Lo que sigue pendiente es la revisión manual
+contra los PDF originales de las respuestas marcadas `revisar: true` — especialmente
+los casos puntuales listados arriba — ya que ninguna trae clave oficial.

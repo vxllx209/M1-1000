@@ -8,22 +8,30 @@
 </head>
 <body>
 
+<canvas id="fondo-matematico" aria-hidden="true"></canvas>
+
 <a class="salto-contenido" href="#main">Saltar al contenido</a>
 
-<header class="barra-superior">
-  <p class="marca">M1<span class="marca-punto" aria-hidden="true"></span><span class="marca-mil">1000</span></p>
-  <div class="barra-superior-chips">
-    <button type="button" id="chip-perfil" class="chip-perfil" title="Cambiar de perfil">
-      <span aria-hidden="true">👤</span>
-      <span id="chip-perfil-nombre">Invitado</span>
-    </button>
-    <div id="chip-racha" class="chip-racha" hidden>
-      <span aria-hidden="true">🔥</span>
-      <span id="chip-racha-numero">0</span>
-      <span class="chip-racha-texto">días</span>
+<div class="barra-fija">
+  <header class="barra-superior">
+    <p class="marca">M1<span class="marca-punto" aria-hidden="true"></span><span class="marca-mil">1000</span></p>
+    <div class="barra-superior-chips">
+      <button type="button" id="chip-perfil" class="chip-perfil" title="Cambiar de perfil">
+        <svg class="icono" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg>
+        <span id="chip-perfil-nombre">Invitado</span>
+      </button>
+      <div id="chip-racha" class="chip-racha" hidden>
+        <svg class="icono icono-flame" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21.5c4 0 7-2.8 7-6.8 0-3.3-2.2-5.6-3.4-7.8-.3 2.2-1.6 3.3-1.6 3.3.3-2.7-1.1-4.4-3.3-6.1C9.2 6.9 7.5 9.2 7.5 12c0 .8.2 1.6.5 2.2C6.9 13.4 6.3 12 6.3 10.4 5 12 4.3 14.1 4.3 15.2c0 3.9 3.7 6.3 7.7 6.3z"/></svg>
+        <span id="chip-racha-numero">0</span>
+        <span class="chip-racha-texto">días</span>
+      </div>
     </div>
+  </header>
+
+  <div class="cinta-frase">
+    <p>“Con fe y corazón la meta será alcanzada”</p>
   </div>
-</header>
+</div>
 
 <main id="main">
 
@@ -47,6 +55,23 @@
   <section id="vista-inicio" class="vista vista-activa">
     <h1 class="titulo-vista">Hoy</h1>
 
+    <button type="button" id="hero-progreso" class="tarjeta tarjeta-hero-progreso">
+      <div class="hero-fila">
+        <div class="hero-bloque-puntaje">
+          <p class="eyebrow">Tu puntaje</p>
+          <p id="hero-puntaje" class="hero-puntaje">—</p>
+          <div class="hero-barra"><div id="hero-barra-relleno" class="hero-barra-relleno"></div></div>
+          <p id="hero-puntaje-nota" class="dato-pie"></p>
+        </div>
+        <div id="hero-bloque-racha" class="hero-bloque-racha">
+          <span id="hero-icono-racha" class="hero-icono-racha"></span>
+          <p id="hero-racha" class="hero-racha-numero">0</p>
+          <p class="dato-pie">días seguidos</p>
+        </div>
+      </div>
+      <div id="hero-logros" class="hero-logros-fila"></div>
+    </button>
+
     <div class="tarjeta tarjeta-meta">
       <p class="eyebrow">Meta diaria</p>
       <p id="titulo-meta" class="titulo-meta">5 preguntas</p>
@@ -65,16 +90,16 @@
 
     <div class="fila-resumen">
       <div class="tarjeta tarjeta-mini">
-        <p class="eyebrow">Puntaje</p>
-        <p id="mini-puntaje" class="dato-grande">—</p>
-      </div>
-      <div class="tarjeta tarjeta-mini">
         <p class="eyebrow">Precisión</p>
         <p id="mini-precision" class="dato-grande">—</p>
       </div>
       <div class="tarjeta tarjeta-mini">
         <p class="eyebrow">Banco</p>
         <p id="mini-banco" class="dato-grande">0/0</p>
+      </div>
+      <div class="tarjeta tarjeta-mini">
+        <p class="eyebrow">Logros</p>
+        <p id="mini-logros" class="dato-grande">0/0</p>
       </div>
     </div>
 
@@ -233,18 +258,20 @@
 
 <nav id="barra-inferior" class="barra-inferior" hidden>
   <button type="button" class="pestana pestana-activa" data-vista="vista-inicio">
-    <span class="pestana-icono" aria-hidden="true">🏠</span>Inicio
+    <span class="pestana-icono-envoltura"><svg class="pestana-icono" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 11.5 12 4l8.5 7.5"/><path d="M5.5 10v9a1 1 0 0 0 1 1h4v-6h3v6h4a1 1 0 0 0 1-1v-9"/></svg></span>Inicio
   </button>
   <button type="button" class="pestana" data-vista="vista-estadisticas">
-    <span class="pestana-icono" aria-hidden="true">📊</span>Estadísticas
+    <span class="pestana-icono-envoltura"><svg class="pestana-icono" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="6" y1="20" x2="6" y2="12"/><line x1="12" y1="20" x2="12" y2="6"/><line x1="18" y1="20" x2="18" y2="14"/></svg></span>Estadísticas
   </button>
   <button type="button" class="pestana" data-vista="vista-progreso">
-    <span class="pestana-icono" aria-hidden="true">📈</span>Progreso
+    <span class="pestana-icono-envoltura"><svg class="pestana-icono" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="4,17 10,11 14,15 20,6"/><polyline points="15,6 20,6 20,11"/></svg></span>Progreso
   </button>
 </nav>
 
 <div id="aviso" class="aviso" role="status" hidden></div>
 
+<script src="js/iconos.js"></script>
+<script src="js/fondo.js"></script>
 <script src="js/perfiles.js"></script>
 <script src="js/progress.js"></script>
 <script src="js/timer.js"></script>
